@@ -2,8 +2,16 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
+import { getFiles } from '@/lib/getFiles'
 
 const inter = Inter({ subsets: ['latin'] })
+
+export async function getServerSideProps() {
+  const files = await getFiles()
+  return {
+    props: { files },
+  }
+}
 
 export default function Home() {
   return (
