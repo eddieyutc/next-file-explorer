@@ -3,13 +3,15 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import { getFiles } from '@/lib/getFiles'
+import { buildFilesTree } from '@/lib/buildFilesTree'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export async function getServerSideProps() {
   const files = await getFiles()
+  const filesTree = buildFilesTree(files)
   return {
-    props: { files },
+    props: { filesTree },
   }
 }
 
