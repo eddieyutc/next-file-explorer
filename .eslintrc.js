@@ -22,5 +22,12 @@ module.exports = {
   },
   plugins: ['react', '@typescript-eslint'],
   rules: {},
-  ignorePatterns: ['.eslintrc.js', '.next/', 'out/'],
+  ignorePatterns: [
+    '.next/',
+    'out/',
+    '.eslintrc.js',
+    'next.config.js',
+    'jest.config.mjs',
+    'jest.node.mjs',
+  ],
 }
