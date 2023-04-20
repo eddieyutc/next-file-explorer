@@ -10,7 +10,7 @@ export default function FilesSection({ filesTree }: FilesSectionProps) {
     <section style={styles}>
       <ul>
         {filesTree.map((file) => (
-          <FileListItem file={file} key={file.id} />
+          <FileListItem file={file} folderLevel={0} key={file.id} />
         ))}
       </ul>
     </section>

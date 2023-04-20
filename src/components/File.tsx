@@ -1,30 +1,15 @@
 import { File } from '@/lib/buildFilesTree'
 import { useState } from 'react'
 import { RiFile3Fill, RiFolder3Fill, RiFolderOpenFill } from 'react-icons/ri'
-
-/**
- * TODO:
- * - [ ] File/Folder icon/identification
- * - [ ] hover/onClick styles
- * - [ ] Proper content flow when expanded/collapsed
- * - [ ] Visual cue for folder hierarchcy
- */
+import styles from './File.module.css'
 
 interface FileProps {
   file: File
+  folderLevel: number
 }
 
-export default function FileListItem({ file }: FileProps) {
+export default function FileListItem({ file, folderLevel }: FileProps) {
   const { name, type, ext, children } = file
-  return type === 'folder' ? (
-    <FolderItem file={file} />
-  ) : (
-    <FileItem file={file} />
-  )
-}
-
-function FolderItem({ file }: FileProps) {
-  const { name, children } = file
   const [expanded, setExpended] = useState(false)
 
   function onClick() {
@@ -33,34 +18,38 @@ function FolderItem({ file }: FileProps) {
 
   return (
     <li>
-      {expanded ? <RiFolderOpenFill /> : <RiFolder3Fill />}
-      <span onClick={onClick}> {name}</span>
-      <ul style={{ display: expanded ? 'block' : 'none' }}>
-        {children?.map((childFile) => (
-          <FileListItem file={childFile} key={childFile.id} />
-        ))}
-      </ul>
+      {type === 'folder' ? (
+        <>
+          <div
+            className={styles.listItem}
+            style={listItemStyle(folderLevel)}
+            onClick={onClick}
+          >
+            {expanded ? <RiFolderOpenFill /> : <RiFolder3Fill />} {name}
+          </div>
+          <ul style={{ display: expanded ? 'block' : 'none' }}>
+            {children?.map((childFile) => (
+              <FileListItem
+                file={childFile}
+                folderLevel={folderLevel + 1}
+                key={childFile.id}
+              />
+            ))}
+          </ul>
+        </>
+      ) : (
+        <>
+          <div className={styles.listItem} style={listItemStyle(folderLevel)}>
+            <RiFile3Fill />
+            {name}
+            {ext ? `.${ext}` : ''}
+          </div>
+        </>
+      )}
     </li>
   )
 }
 
-function FileItem({ file }: FileProps) {
-  const { name } = file
-
-  return (
-    <li>
-      <RiFile3Fill />
-      {name}
-    </li>
-  )
-}
-
-/**
- * <Folder>
- * - onClick: expand/collapse children
- * - {children}: children.map(<Folder>/<File>)
- *
- * <File>
- * - single list item
- *
- */
+const listItemStyle = (folderLevel: number) => ({
+  marginLeft: `${folderLevel}rem`,
+})

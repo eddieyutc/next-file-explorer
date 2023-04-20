@@ -1,0 +1,9 @@
+.listItem {
+  border-bottom: 1px solid grey;
+  padding: 1rem;
+}
+
+.listItem:hover {
+  background-color: grey;
+  cursor: pointer;
+}
