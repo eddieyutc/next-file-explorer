@@ -1,5 +1,6 @@
 import { File } from '@/lib/buildFilesTree'
 import { useState } from 'react'
+import { RiFile3Fill, RiFolder3Fill, RiFolderOpenFill } from 'react-icons/ri'
 
 /**
  * TODO:
@@ -32,6 +33,7 @@ function FolderItem({ file }: FileProps) {
 
   return (
     <li>
+      {expanded ? <RiFolderOpenFill /> : <RiFolder3Fill />}
       <span onClick={onClick}> {name}</span>
       <ul style={{ display: expanded ? 'block' : 'none' }}>
         {children?.map((childFile) => (
@@ -45,7 +47,12 @@ function FolderItem({ file }: FileProps) {
 function FileItem({ file }: FileProps) {
   const { name } = file
 
-  return <li>{name}</li>
+  return (
+    <li>
+      <RiFile3Fill />
+      {name}
+    </li>
+  )
 }
 
 /**
