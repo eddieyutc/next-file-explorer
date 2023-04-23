@@ -51,5 +51,5 @@ export default function FileListItem({ file, folderLevel }: FileProps) {
 }
 
 const listItemStyle = (folderLevel: number) => ({
-  marginLeft: `${folderLevel}rem`,
+  marginLeft: `${folderLevel * 1.5}rem`,
 })
